@@ -1,79 +1,59 @@
 # Flanders Language & Education Policy Barometer
 
-A longitudinal Streamlit dashboard that monitors the relationship between
-the Dutch-language context and educational outcomes across Flemish
-municipalities, 2014–2024.
+**Repository description:** An interactive Streamlit dashboard exploring language context and educational outcomes across Flemish municipalities from 2014 to 2024.
 
-## Quick start
+The barometer helps policy-makers, researchers, and analysts compare municipal patterns over time. It combines source indicators into two composite measures, visualizes their distributions and trends, and provides municipality-level detail. The dashboard is descriptive: its comparisons and regressions show associations, not causal effects.
 
-### 1. Install Python 3.10+
+## Get started
 
-Verify in a terminal:
+### Requirements
 
-```
-py --version
-```
+- Python 3.10 or newer
+- The Excel source workbook included in this repository
 
-If you don't have Python: <https://www.python.org/downloads/>.
+### Install and run
 
-### 2. Install the required packages
+From the repository folder, create an environment (recommended), install the dependencies, and start the app:
 
-```
-py -m pip install streamlit plotly pandas openpyxl scikit-learn scipy
-```
-
-### 3. Run the dashboard
-
-From the project folder, in a terminal:
-
-```
-py -m streamlit run app.py
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install streamlit plotly pandas numpy openpyxl scipy
+python -m streamlit run app.py
 ```
 
-A browser tab opens automatically at `http://localhost:8501`.
+On Windows, activate the environment with `.venv\\Scripts\\activate` and use `python` for the commands above. Streamlit prints a local URL, usually <http://localhost:8501>, and opens the dashboard in your browser. Stop it with **Ctrl+C** in the terminal.
 
-Stop the server with **Ctrl+C** in the terminal.
+## Explore the dashboard
 
----
+- **Intro:** the measures, controls, and guidance for interpreting results.
+- **Dutch Language Pressure:** municipal distributions, change over time, and rankings.
+- **Educational Strain:** the corresponding views for educational outcomes.
+- **Scatter:** the relationship between the two scores, with a descriptive OLS fit; animate across years to compare patterns.
+- **Trend & Deviation:** how municipalities differ from the fitted relationship over time, with selectable baselines and trend methods.
+- **Municipal Detail:** indicator trends against the Flemish average, a profile chart, an automatically generated summary, and downloadable CSV data.
 
-## What's in this folder
+Use the sidebar to filter provinces and years, highlight municipalities across views, and include or exclude Brussels-Capital.
 
-| File                              | What it does                                        |
-| --------------------------------- | --------------------------------------------------- |
-| `app.py`                          | Streamlit dashboard — main entry point              |
-| `config.py`                       | Indicator definitions, province lookup, palettes    |
-| `data_loader.py`                  | Reshapes the wide Excel export into tidy long format |
-| `compute_scores.py`               | Z-score normalisation + composite scores            |
-| `auto_analysis.py`                | Rule-based per-municipality narrative (Tab 5)       |
-| `compactere_relatief_DataVis.xlsx`| Source data (provincies.incijfers.be export)        |
-| `restructured_data.xlsx`          | Cleaned long-format data (for inspection)           |
-| `.streamlit/config.toml`          | Forces a light theme                                |
+## How to read the scores
 
-## Tabs overview
+- Each score is standardized separately **within each year**. A score describes a municipality's position relative to other municipalities in that year; score values should not be compared directly across years.
+- Score-based views end at **2024** because some component indicators are not available for 2025. Where available, raw indicator data may cover additional years.
+- The language-pressure and educational-strain measures are composite summaries of selected indicators. They are not direct measures of individual pupils, schools, or the causal effect of language context on educational outcomes.
+- Regression lines and residuals describe statistical patterns in the data. They do not establish that one measure causes another.
 
-- **0. Intro** — what the barometer does and how to read it
-- **1. Dutch Language Pressure** — distribution, evolution, animated ranking
-- **2. Educational Strain** — same structure for the outcome score
-- **3. Scatter** — both scores; OLS regression + means update per year
-- **4. Trend & Deviation** — OLS residuals over time, baseline selectable
-- **5. Municipal Detail** — raw indicators (vs Flemish average), radar,
-  auto-generated summary per selected municipality, downloadable CSV
+## Project files
 
-## Notes for the recipient
+| File | Purpose |
+| --- | --- |
+| `app.py` | Streamlit interface, charts, and dashboard layout |
+| `config.py` | Indicator definitions, score components, and municipality/province mappings |
+| `data_loader.py` | Reads the source workbook and reshapes it for analysis |
+| `compute_scores.py` | Builds composite scores and trend calculations |
+| `auto_analysis.py` | Generates rule-based municipality summaries |
+| `compactere_relatief_DataVis.xlsx` | Source data export from provincies.incijfers.be |
+| `THEORY_ALIGNMENT.md` | Notes on visualization principles used in the dashboard |
 
-- Scores are z-score normalised **within each year**: values are
-  comparable across municipalities in the same year, but not across
-  years.
-- 2025 is excluded from score-based tabs because two component
-  indicators are not yet published.
-- Use the sidebar's *Brussels-Capital toggle* to switch between
-  "all 304 municipalities" and "five Flemish provinces only".
+## Data and methods
 
-## Troubleshooting
-
-- **"Python is niet gevonden"** on Windows: install Python from
-  python.org or run via `py.exe` instead of `python`.
-- **Streamlit deprecation warning** about `use_container_width`: harmless,
-  appears with older Streamlit versions.
-- **Charts not updating after toggling sidebar**: refresh the browser
-  tab (F5) or press **R** while focused on the app.
+The dashboard reads `compactere_relatief_DataVis.xlsx` from the repository root at startup. It reshapes the workbook into municipality, province, indicator, year, and value records, then computes the composite measures from the indicators defined in `config.py`. See that file for the score components and `THEORY_ALIGNMENT.md` for the visualization rationale.
