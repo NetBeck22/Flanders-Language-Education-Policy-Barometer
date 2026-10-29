@@ -1,28 +1,8 @@
 # Flanders Language & Education Policy Barometer
 
-**Repository description:** An interactive Streamlit dashboard exploring language context and educational outcomes across Flemish municipalities from 2014 to 2024.
+An interactive Streamlit dashboard exploring language context and educational outcomes across Flemish municipalities from 2014 to 2024.
 
 The barometer helps policy-makers, researchers, and analysts compare municipal patterns over time. It combines source indicators into two composite measures, visualizes their distributions and trends, and provides municipality-level detail. The dashboard is descriptive: its comparisons and regressions show associations, not causal effects.
-
-## Get started
-
-### Requirements
-
-- Python 3.10 or newer
-- The Excel source workbook included in this repository
-
-### Install and run
-
-From the repository folder, create an environment (recommended), install the dependencies, and start the app:
-
-```bash
-python3 -m venv .venv
-source .venv/bin/activate
-python -m pip install streamlit plotly pandas numpy openpyxl scipy
-python -m streamlit run app.py
-```
-
-On Windows, activate the environment with `.venv\\Scripts\\activate` and use `python` for the commands above. Streamlit prints a local URL, usually <http://localhost:8501>, and opens the dashboard in your browser. Stop it with **Ctrl+C** in the terminal.
 
 ## Explore the dashboard
 
